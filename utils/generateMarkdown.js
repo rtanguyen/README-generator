@@ -1,25 +1,32 @@
-// TODO: Create a function that returns a license badge based on which license is passed in
-// If there is no license, return an empty string
-function renderLicenseBadge(license) {}
+// function that returns a license badge 
+function renderLicenseBadge(data) {
+  let license = data.license;
+  let badge;
+    if (!data.licenseConfirm) {
+      return '';
+    } else {
+    return badge = `![License](https://img.shields.io/badge/License-${license}-yellow.svg)`;
+    }
+}
+
 
 // TODO: Create a function that returns the license link
 // If there is no license, return an empty string
 function renderLicenseLink(license) {}
 
-// TODO: Create a function that returns the license section of README
-// If there is no license, return an empty string
+//that returns the license section of README
 function renderLicenseSection(license) {
   if (!license.licenseConfirm) {
     return '';
   }
 
   return `
-  ##License
+  ## License
   ${license.license}
   `;
   };
 
-// TODO: Create a function to generate markdown for README
+// function to generate markdown for README
 function generateMarkdown(data) {
   return `
   # ${data.title}
@@ -27,7 +34,7 @@ function generateMarkdown(data) {
   ## Description
   ${data.description}
 
-  ##Table of Contents
+  ## Table of Contents
   * [Installation](#installation)
   * [Usage](#usage)
   * [Contributing](#contributing)
@@ -37,7 +44,9 @@ function generateMarkdown(data) {
 
   ## Installation
   To get started, run the following command: 
+  \`\`\`
   ${data.installation}
+  \`\`\`
 
   ## Usage
   ${data.usage}
@@ -45,10 +54,13 @@ function generateMarkdown(data) {
   ## Contributing
   ${data.contribute}
   ${renderLicenseSection(data)}
+  ${renderLicenseBadge(data)}
+
   ## Tests
   For testing purposes, run the following command:
+  \`\`\`
   ${data.test}
-
+  \`\`\`
   ## Questions
   Please reach out to [${data.username}](${data.github}) or ${data.email} for any questions.
 `;

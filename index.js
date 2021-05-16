@@ -81,18 +81,18 @@ const questions = [
         type: 'confirm',
         name: 'licenseConfirm',
         message: 'Is your project licensed?',
-        default: false
+        default: true
       },
       {
         type: 'checkbox',
         name: 'license',
         message: 'Select license:',
-        choices: ["MIT", "Apache 2.0", "BSD 3", "GPL 3.0"],
-        when: (licenseConfirm) => {
-            if (licenseConfirm) {
-              return true;
-            } else {
-              return false;
+        choices: ["MIT", "Apache2.0", "BSD3", "GPL3.0"],
+        when: ({licenseConfirm }) => {
+          if (licenseConfirm) {
+            return true;
+          } else {
+            return false;
             }
           }
       },
@@ -132,7 +132,7 @@ const questions = [
 
 // // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-    return fs.writeFile(fileName, readmeData, err => {
+    return fs.writeFile(fileName, data, err => {
         if (err) throw err;
         console.log('README created!');
     })
@@ -141,11 +141,9 @@ function writeToFile(fileName, data) {
 // // TODO: Create a function to initialize app
 function init() {
     inquirer.prompt(questions)
-    .then(response => {
-        console.log(response);
-        readmeData = generateMarkdown(response);
-        writeToFile('./README.md', readmeData);
-    })
+    .then(function(data) {
+        writeToFile('./README.md', generateMarkdown(data));
+    });
 }
 
 // // Function call to initialize app
@@ -155,15 +153,15 @@ init()
 // //MOCK DATA
 // const mockData = {
 //     username: 'rtanguyen',
-//     github: 'https://github.com/rtanguyen/README-generator',
-//     email: 'becki@gmail',
-//     title: 'READ ME GEN',
+//     github: 'https://github.com/rtanguyen',
+//     email: 'rtanguyen@gmail.com',
+//     title: 'README-generator',
 //     description: 'Allows users to quickly and easily generate a README file by using a command-line application.',
 //     installation: 'npm i',
 //     licenseConfirm: true,
 //     license: [ 'Apache 2.0' ],
-//     usage: 'BLAHBLAHBLAH',
-//     contribute: 'lsdkfjlsdkfjlsdkfjlsdfj',
+//     usage: 'Clone repo, install packages, have fun',
+//     contribute: 'Please contact me if you would like to contribute to this project, but please don't.',
 //     test: 'npm test'
 // }
 
