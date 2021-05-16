@@ -2,13 +2,14 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const generateMarkdown = require("./utils/generateMarkdown.js");
+var readmeData = {}
 
 //array of questions for user input
 const questions = [
     {
         type: 'input',
         name: 'username',
-       message: 'Enter your github username (required)',
+       message: 'Enter your github username',
        validate: usernameInput => {
         if (usernameInput) {
           return true;
@@ -21,7 +22,7 @@ const questions = [
       {
         type: 'input',
         name: 'github',
-       message: 'Enter link to github profile (required)',
+       message: 'Enter link to github profile',
        validate: githubInput => {
         if (githubInput) {
           return true;
@@ -34,7 +35,7 @@ const questions = [
       {
         type: 'input',
         name: 'email',
-       message: 'Enter your email address (required)',
+       message: 'Enter your email address',
        validate: emailInput => {
         if (emailInput) {
           return true;
@@ -47,7 +48,7 @@ const questions = [
       {
         type: 'input',
         name: 'title',
-        message: 'Enter the name of your project (required)',
+        message: 'Enter the name of your project',
         validate: projectInput => {
             if (projectInput) {
               return true;
@@ -60,7 +61,7 @@ const questions = [
       {
         type: 'input',
         name: 'description',
-        message: 'Provide a description of the project (required)',
+        message: 'Provide a description of the project',
         validate: descrInput => {
             if (descrInput) {
               return true;
@@ -98,7 +99,7 @@ const questions = [
       {
         type: 'input',
         name: 'usage',
-        message: 'Provide instructions and examples for use (required)',
+        message: 'Provide instructions and examples for use',
         validate: usageInput => {
             if (usageInput) {
               return true;
@@ -111,7 +112,7 @@ const questions = [
       {
         type: 'input',
         name: 'contribute',
-        message: 'Provide instructions for contribution to application (required)',
+        message: 'Provide instructions for contribution to application',
         validate: contributionInput => {
             if (contributionInput) {
               return true;
@@ -130,39 +131,50 @@ const questions = [
 ];
 
 // // TODO: Create a function to write README file
-// function writeToFile(fileName, data) {}
-
-// // TODO: Create a function to initialize app
-// function init() {
-//     return inquirer.prompt(questions)
-//     .then(questions => {
-//         const readmeFile = generateMarkdown(questions);
-//     })
-// }
-// // Function call to initialize app
-// init();
-
-
-
-
-//MOCK DATA
-const mockData = {
-    username: 'rtanguyen',
-    github: 'https://github.com/rtanguyen/README-generator',
-    email: 'becki@gmail',
-    title: 'READ ME GEN',
-    description: 'GENERATES READ ME',
-    installation: 'npm i',
-    licenseConfirm: true,
-    license: [ 'Apache 2.0' ],
-    usage: 'BLAHBLAHBLAH',
-    contribute: 'lsdkfjlsdkfjlsdkfjlsdfj',
-    test: 'npm test'
+function writeToFile(fileName, data) {
+    return fs.writeFile(fileName, readmeData, err => {
+        if (err) throw err;
+        console.log('README created!');
+    })
 }
 
-function test() {
-        const readmeFile = generateMarkdown(mockData);
-        console.log(readmeFile)
-    }
+// // TODO: Create a function to initialize app
+function init() {
+    inquirer.prompt(questions)
+    .then(response => {
+        console.log(response);
+        readmeData = generateMarkdown(response);
+        writeToFile('./README.md', readmeData);
+    })
+}
 
-test();
+// // Function call to initialize app
+init()
+
+
+// //MOCK DATA
+// const mockData = {
+//     username: 'rtanguyen',
+//     github: 'https://github.com/rtanguyen/README-generator',
+//     email: 'becki@gmail',
+//     title: 'READ ME GEN',
+//     description: 'Allows users to quickly and easily generate a README file by using a command-line application.',
+//     installation: 'npm i',
+//     licenseConfirm: true,
+//     license: [ 'Apache 2.0' ],
+//     usage: 'BLAHBLAHBLAH',
+//     contribute: 'lsdkfjlsdkfjlsdkfjlsdfj',
+//     test: 'npm test'
+// }
+
+// function test() {
+//         console.log(readmeFile)
+//     }
+
+// function writeToFile(fileName, data) {
+//     const readmeFile = generateMarkdown(mockData);
+//     fs.writeFile('./README.md', readmeFile, err => {
+//         if (err) throw err;
+//         console.log('README created!');
+//     })
+// }

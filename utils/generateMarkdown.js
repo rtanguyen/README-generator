@@ -33,23 +33,23 @@ function generateMarkdown(data) {
   * [Contributing](#contributing)
   * [License](#license)
   * [Tests](#tests)
-  * Questions(#questions)
+  * [Questions](#questions)
 
-  ##Installation
+  ## Installation
   To get started, run the following command: 
   ${data.installation}
 
-  ##Usage
+  ## Usage
   ${data.usage}
 
-  ##Contributing
+  ## Contributing
   ${data.contribute}
   ${renderLicenseSection(data)}
-  ##Tests
+  ## Tests
   For testing purposes, run the following command:
   ${data.test}
 
-  ##Questions
+  ## Questions
   Please reach out to [${data.username}](${data.github}) or ${data.email} for any questions.
 `;
 }
